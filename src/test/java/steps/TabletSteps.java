@@ -14,6 +14,8 @@ import pages.HomePage;
 import pages.ProductDetailPage;
 import pages.TabletCategoryPage;
 import utils.DriverFactory;
+import utils.LogHelper;
+
 import java.time.Duration;
 
 public class TabletSteps {
@@ -27,6 +29,7 @@ public class TabletSteps {
 
     @Before
     public void setUp() {
+        LogHelper.info("🔥 Test başlıyor...");
         if (DriverFactory.getDriver() == null) {
             DriverFactory.setDriver("chrome"); // Varsayılan olarak Chrome başlat
         }

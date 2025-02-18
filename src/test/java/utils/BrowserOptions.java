@@ -6,44 +6,60 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The BrowserOptions class provides customized configurations for different browsers.
+ * It includes settings for Chrome and Firefox to optimize the test execution environment.
+ */
 public class BrowserOptions {
 
+    /**
+     * Configures and returns ChromeOptions with predefined settings.
+     *
+     * @return A configured ChromeOptions instance.
+     */
     public static ChromeOptions chromeOptions() {
         ChromeOptions chromeOptions = new ChromeOptions();
         MutableCapabilities capabilities = new MutableCapabilities();
 
-        // Tarayıcı tercihleri
+        // Browser preferences
         Map<String, Object> prefs = new HashMap<>();
-        prefs.put("profile.default_content_setting_values.cookies", 1); // Çerezleri kabul et
-        prefs.put("profile.default_content_setting_values.notifications", 2); // Bildirimleri kapat
+        prefs.put("profile.default_content_setting_values.cookies", 1); // Accept cookies
+        prefs.put("profile.default_content_setting_values.notifications", 2); // Disable notifications
         chromeOptions.setExperimentalOption("prefs", prefs);
 
-        // Tarayıcı ayarları
-        chromeOptions.addArguments("--disable-notifications"); // Web bildirimlerini engelle
-        chromeOptions.addArguments("--disable-popup-blocking"); // Popup engelleyiciyi kapat
-        chromeOptions.addArguments("--start-maximized"); // Tarayıcıyı tam ekran aç
-        chromeOptions.addArguments("--ignore-certificate-errors"); // SSL hatalarını yoksay
-        chromeOptions.addArguments("--incognito"); // Gizli modda çalıştır
+        // Browser arguments for better automation
+        chromeOptions.addArguments("--disable-notifications"); // Disable web notifications
+        chromeOptions.addArguments("--disable-popup-blocking"); // Prevent pop-ups from blocking tests
+        chromeOptions.addArguments("--start-maximized"); // Start the browser in maximized mode
+        chromeOptions.addArguments("--ignore-certificate-errors"); // Ignore SSL certificate errors
+        chromeOptions.addArguments("--incognito"); // Run in incognito mode
 
-        capabilities.setCapability("acceptInsecureCerts", true); // Güvensiz sertifikaları kabul et
-        capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions); // ChromeOptions ile birleştir
+        // Set capabilities to accept insecure certificates
+        capabilities.setCapability("acceptInsecureCerts", true);
+        capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions); // Merge Chrome options with capabilities
 
         chromeOptions.merge(capabilities);
         return chromeOptions;
     }
 
+    /**
+     * Configures and returns FirefoxOptions with predefined settings.
+     *
+     * @return A configured FirefoxOptions instance.
+     */
     public static FirefoxOptions firefoxOptions() {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         MutableCapabilities capabilities = new MutableCapabilities();
 
-        // Tarayıcı ayarları
-        firefoxOptions.addArguments("--private"); // Gizli modda aç (gerekirse kaldırabilirsin)
-        firefoxOptions.addArguments("--disable-notifications"); // Bildirimleri kapat
+        // Browser arguments for better automation
+        firefoxOptions.addArguments("--private"); // Run in private mode (can be removed if not needed)
+        firefoxOptions.addArguments("--disable-notifications"); // Disable notifications
 
-        // **Tam ekran açmak için**
+        // Ensure fullscreen mode is properly set
         firefoxOptions.addPreference("browser.fullscreen.autohide", true);
         firefoxOptions.addPreference("browser.fullscreen.animate", false);
 
+        // Set capabilities to accept insecure certificates
         capabilities.setCapability("acceptInsecureCerts", true);
         capabilities.setCapability(FirefoxOptions.FIREFOX_OPTIONS, firefoxOptions);
 

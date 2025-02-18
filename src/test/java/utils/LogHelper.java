@@ -4,26 +4,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LogHelper {
-    // Genel LogHelper sınıfı için bir Logger oluşturuyoruz.
     private static final Logger logger = LoggerFactory.getLogger(LogHelper.class);
 
     public static void info(String message) {
-        logger.info(message);
+        logger.info("[INFO] " + message);
     }
 
     public static void debug(String message) {
-        logger.debug(message);
+        logger.debug("[DEBUG] " + message);
     }
 
     public static void warn(String message) {
-        logger.warn(message);
+        logger.warn("[WARN] " + message);
     }
 
     public static void error(String message) {
-        logger.error(message);
+        logger.error("[ERROR] " + message);
     }
 
     public static void error(String message, Throwable t) {
-        logger.error(message, t);
+        logger.error("[ERROR] " + message, t);
     }
 }

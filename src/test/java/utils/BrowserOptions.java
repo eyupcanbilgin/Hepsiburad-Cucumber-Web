@@ -3,8 +3,6 @@ package utils;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,14 +36,13 @@ public class BrowserOptions {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         MutableCapabilities capabilities = new MutableCapabilities();
 
-        // Bildirimleri kapat
-        firefoxOptions.addPreference("permissions.default.desktop-notification", 2);
-        firefoxOptions.addPreference("dom.webnotifications.enabled", false);
-
         // Tarayıcı ayarları
-        firefoxOptions.addArguments("--private"); // Gizli modda çalıştır
-        firefoxOptions.addArguments("--start-maximized"); // Tam ekran aç
-        firefoxOptions.addArguments("--ignore-certificate-errors"); // SSL hatalarını yoksay
+        firefoxOptions.addArguments("--private"); // Gizli modda aç (gerekirse kaldırabilirsin)
+        firefoxOptions.addArguments("--disable-notifications"); // Bildirimleri kapat
+
+        // **Tam ekran açmak için**
+        firefoxOptions.addPreference("browser.fullscreen.autohide", true);
+        firefoxOptions.addPreference("browser.fullscreen.animate", false);
 
         capabilities.setCapability("acceptInsecureCerts", true);
         capabilities.setCapability(FirefoxOptions.FIREFOX_OPTIONS, firefoxOptions);

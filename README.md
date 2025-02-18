@@ -1,112 +1,107 @@
-# 🛒 Hepsiburada UI Test Automation
+# Hepsiburada UI Test Automation
 
-This project is a **UI Test Automation Framework** developed to test user scenarios on the **Hepsiburada** website using technologies such as **Selenium, Cucumber, TestNG, and Allure**.
+## Overview
+This project is an automated UI testing framework for Hepsiburada, one of the largest e-commerce platforms in Turkey. The test automation framework is built using **Selenium WebDriver**, **Cucumber (BDD)**, and **TestNG**, ensuring robust test execution and clear reporting via **Allure Reports**.
 
----
-
-## 📌 Project Contents
-
-- **Parallel Browser Support:** Run tests simultaneously on Chrome and Firefox
-- **Page Object Model (POM) Usage:** Ensures maintainability of test scenarios
-- **Allure Reporting Integration:** Provides detailed analysis of test results
-- **Logging System:** Enables detailed log tracking during test execution
-- **Cucumber BDD Usage:** Makes scenarios more readable and manageable
-- **WebDriverManager Utilization:** Eliminates the need to manually download drivers
-
----
-
-## 📂 Project Structure
+## Project Structure
+The project follows a structured page object model (POM) with well-defined layers to maintain test scalability and reusability.
 
 ```
-📦 Hepsiburada
-┣ 📂 src
-┃ ┣ 📂 main
-┃ ┃ ┣ 📂 java
-┃ ┃ ┃ ┣ 📂 factory              # Page Object Factory
-┃ ┃ ┃ ┣ 📂 pages                # Page classes
-┃ ┃ ┃ ┣ 📂 utils                # Utility tools (Driver, Log, Config, etc.)
-┃ ┣ 📂 test
-┃ ┃ ┣ 📂 java
-┃ ┃ ┃ ┣ 📂 runners              # TestNG Cucumber Runner
-┃ ┃ ┃ ┣ 📂 steps                # Step Definitions
-┃ ┃ ┃ ┣ 📂 resources
-┃ ┃ ┃ ┃ ┣ 📂 features           # Cucumber Feature Files
-┃ ┃ ┃ ┃ ┗ 📂 config.properties  # Test environment settings
-┣ 📜 pom.xml                    # Maven dependencies
-┣ 📜 testng.xml                  # TestNG parallel test execution
-┣ 📜 README.md                   # Project documentation
+- factory/                # Page object factory for managing page instances
+- pages/                  # Page classes implementing page object model
+- runners/                # Test runners for executing Cucumber scenarios
+- steps/                  # Step definitions for Cucumber feature files
+- utils/                  # Utility classes (driver management, logging, etc.)
+- resources/              # Configuration and test resources
+    - features/           # Cucumber feature files
+    - allure.properties   # Allure report configuration
+    - logback.xml         # Logging configuration
+    - testng.xml          # TestNG execution configuration
+- target/                 # Generated test artifacts
+- pom.xml                 # Maven dependencies and build configuration
 ```
 
----
+## Technologies Used
+- **Java 21**
+- **Selenium WebDriver 4.x**
+- **Cucumber 7.x**
+- **TestNG 7.x**
+- **Allure Reports**
+- **WebDriverManager**
+- **Logback for logging**
+- **Maven**
 
-## 🛠️ Technologies & Tools Used
+## Installation and Setup
+To run the tests, ensure you have the following installed:
+- **Java 21**
+- **Maven**
 
-| Technology | Description |
-|------------|------------|
-| Java 11+   | Programming language |
-| Selenium   | UI automation |
-| TestNG     | Test framework |
-| Cucumber   | BDD framework |
-| WebDriverManager | Driver management |
-| Maven      | Dependency management |
-| Allure     | Test reporting |
-| Logback    | Log management |
+### Clone the Repository
+```sh
+git clone https://github.com/eyupcanbilgin/Hepsiburad-Cucumber-Web.git
+cd Hepsiburad-Cucumber-Web
+```
 
----
-
-## 🔧 Setup & Execution
-
-### **1️⃣ Install Dependencies**
-
+### Install Dependencies
 ```sh
 mvn clean install
 ```
 
-### **2️⃣ Running Tests**
-
-#### **Via Cucumber Feature File**
+## Running Tests
+### Run Tests Using Maven
 ```sh
-mvn test -Dcucumber.features=src/test/resources/features/Tablet.feature
+mvn test
 ```
 
-#### **Via TestNG XML File (Parallel Execution)**
+### Run Tests Using TestNG
 ```sh
-mvn test -Dsurefire.suiteXmlFiles=src/test/resources/testng.xml
+mvn test -DsuiteXmlFile=src/test/resources/testng.xml
 ```
 
-### **3️⃣ Open Allure Report**
-
+### Run Specific Feature File
 ```sh
-allure serve target/allure-results
+mvn test -Dcucumber.options="src/test/resources/features/Tablet.feature"
 ```
+
+### Generate Allure Reports
+To generate an Allure report after test execution:
+```sh
+mvn allure:serve
+```
+This will open the test execution report in a browser.
+
+## Test Scenarios
+The project includes automated test cases for Hepsiburada's tablet purchase process, including:
+1. Navigating to the **Tablet Category**
+2. Filtering by **Brand (Apple)**
+3. Filtering by **Screen Size (13.2 inches)**
+4. Selecting the **Highest Priced Product**
+5. Adding the product to the **Shopping Cart**
+6. Verifying the **Cart Price Matches the Product Page Price**
+
+## Parallel Execution
+Parallel execution is supported via TestNG, allowing tests to run across multiple browsers simultaneously.
+```sh
+mvn test -Pparallel
+```
+
+## Logging and Debugging
+Logging is handled using **Logback**, and logs are generated in the console during execution. For troubleshooting, refer to:
+- **target/allure-results/** (Allure reports)
+- **Console logs** (Execution status and errors)
+
+## Contribution
+If you’d like to contribute:
+1. Fork the repository.
+2. Create a feature branch (`git checkout -b feature-branch`).
+3. Commit your changes (`git commit -m 'Add new feature'`).
+4. Push to the branch (`git push origin feature-branch`).
+5. Open a Pull Request.
+
+## License
+This project is licensed under the **MIT License**.
 
 ---
 
-## ✅ Test Scenario
-
-**Scenario: User filters Apple tablets, selects the most expensive product, adds it to the cart, and verifies prices**
-```gherkin
-Given the user navigates to "https://www.hepsiburada.com/"
-When the user navigates to the Tablet category
-And the user selects Apple from the Brand filter
-When the user accepts all cookies
-And the user selects 13.2-inch screen size from the Screen Size filter
-And the user selects the most expensive product without sorting
-And the user clicks on the add to cart button on the product detail page
-Then the product in the cart should have the same price as on the product detail page
-```
-
----
-
-## 🏆 Contributing to the Project
-
-To contribute to this project, follow these steps:
-1. **Fork** the repository.
-2. Create a new **branch**: `feature/new-feature`
-3. Make your changes and **commit**.
-4. Submit a **Pull Request (PR)**.
-
----
-
-🚀 **Happy testing!**
+Developed by [Eyupcan Bilgin]
 
